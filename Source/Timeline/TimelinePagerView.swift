@@ -8,6 +8,8 @@ public protocol TimelinePagerViewDelegate: AnyObject {
   func timelinePagerDidLongPressTimelineAtHour(_ hour: Int)
   func timelinePager(timelinePager: TimelinePagerView, willMoveTo date: Date)
   func timelinePager(timelinePager: TimelinePagerView, didMoveTo  date: Date)
+func timelinePager(didScroll : UIScrollView)
+func getEmptyView(forDate : Date) -> UIView?
 }
 
 public class TimelinePagerView: UIView {
@@ -158,8 +160,27 @@ extension TimelinePagerView: DayViewStateUpdating {
       pagingViewController.setViewControllers([newController], direction: .reverse, animated: true, completion: completionHandler(_:))
     } else if newDate.isLater(than: oldDate) {
       pagingViewController.setViewControllers([newController], direction: .forward, animated: true, completion: completionHandler(_:))
+    public func move(from oldDate: Date, to newDate: Date) {
+        let oldDate = oldDate.dateOnly()
+        let newDate = newDate.dateOnly()
+        if newDate.isEarlier(than: oldDate) {
+            var timelineDate = newDate.subtract(TimeChunk.dateComponents(days: 0))
+            for timelineContainer in timelinePager.reusableViews {
+                timelineContainer.timeline.date = timelineDate
+                timelineDate = timelineDate.add(TimeChunk.dateComponents(days: 1))
+                updateTimeline(timelineContainer.timeline)
+            }
+            timelinePager.scrollBackward()
+        } else if newDate.isLater(than: oldDate) {
+            var timelineDate = newDate.add(TimeChunk.dateComponents(days: 0))
+            for timelineContainer in timelinePager.reusableViews.reversed() {
+                timelineContainer.timeline.date = timelineDate
+                timelineDate = timelineDate.subtract(TimeChunk.dateComponents(days: 1))
+                updateTimeline(timelineContainer.timeline)
+            }
+            timelinePager.scrollForward()
+        }
     }
-  }
 }
 
 extension TimelinePagerView: UIPageViewControllerDataSource {
@@ -193,19 +214,58 @@ extension TimelinePagerView: UIPageViewControllerDelegate {
       delegate?.timelinePager(timelinePager: self, didMoveTo: selectedDate)
     }
   }
+
+extension TimelinePagerView: PagingScrollViewDelegate {
+    func scrollviewDidScrollToViewAtIndex(_ index: Int) {
+        let nextDate = timelinePager.reusableViews[index].timeline.date
+        delegate?.timelinePager(timelinePager: self, willMoveTo: nextDate)
+        state?.client(client: self, didMoveTo: nextDate)
+        scrollToFirstEventIfNeeded()
+        delegate?.timelinePager(timelinePager: self, didMoveTo: nextDate)
+        
+        // Update left & right views
+        
+        let leftView = timelinePager.reusableViews[0].timeline
+        let rightView = timelinePager.reusableViews[2].timeline
+        
+        guard let state = state
+            else{ return }
+        
+        leftView.date = state.selectedDate.add(TimeChunk.dateComponents(days: -1))
+        rightView.date = state.selectedDate.add(TimeChunk.dateComponents(days: 1))
+        
+        [leftView, rightView].forEach{self.updateTimeline($0)}
+    }
+    
+    func scrollToFirstEventIfNeeded() {
+        if autoScrollToFirstEvent {
+            let index = Int(timelinePager.currentScrollViewPage)
+            timelinePager.reusableViews[index].scrollToFirstEvent()
+        }
+    }
 }
 
 extension TimelinePagerView: TimelineViewDelegate {
-  public func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int) {
-    delegate?.timelinePagerDidLongPressTimelineAtHour(hour)
-  }
+    public func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int) {
+        delegate?.timelinePagerDidLongPressTimelineAtHour(hour)
+    }
+    public func getEmptyView() -> UIView? {
+        // let date = timelinePager.reusableViews[Int(timelinePager.currentScrollViewPage)].timeline.date
+        return delegate?.getEmptyView(forDate : Date())
+    }
 }
 
 extension TimelinePagerView: EventViewDelegate {
-  public func eventViewDidTap(_ eventView: EventView) {
-    delegate?.timelinePagerDidSelectEventView(eventView)
-  }
-  public func eventViewDidLongPress(_ eventview: EventView) {
-    delegate?.timelinePagerDidLongPressEventView(eventview)
-  }
+    public func eventViewDidTap(_ eventView: EventView) {
+        delegate?.timelinePagerDidSelectEventView(eventView)
+    }
+    public func eventViewDidLongPress(_ eventview: EventView) {
+        delegate?.timelinePagerDidLongPressEventView(eventview)
+    }
+}
+
+extension TimelinePagerView : UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.timelinePager(didScroll : scrollView)
+    }
 }

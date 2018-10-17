@@ -158,7 +158,22 @@ extension DayHeaderView: UIPageViewControllerDataSource {
     return nil
   }
 }
+extension DayHeaderView: PagingScrollViewDelegate {
+    func scrollViewDidScrolled(scrollView: UIScrollView) {
+        //nothing
+    }
+    
+  func scrollviewDidScrollToViewAtIndex(_ index: Int) {
+    let activeView = pagingScrollView.reusableViews[index]
+    activeView.selectedIndex = currentWeekdayIndex
 
+    let leftView = pagingScrollView.reusableViews[0]
+    let rightView = pagingScrollView.reusableViews[2]
+
+    leftView.startDate = activeView.startDate.add(TimeChunk.dateComponents(weeks: -1))
+    rightView.startDate = activeView.startDate.add(TimeChunk.dateComponents(weeks: 1))
+
+    state?.client(client: self, didMoveTo: activeView.selectedDate!)
 extension DayHeaderView: UIPageViewControllerDelegate {
   public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
     guard completed else {return}

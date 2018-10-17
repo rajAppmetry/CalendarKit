@@ -3,7 +3,8 @@ import Neon
 import DateToolsSwift
 
 public protocol TimelineViewDelegate: AnyObject {
-  func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int)
+    func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int)
+    func getEmptyView() -> UIView?
 }
 
 public class TimelineView: UIView {

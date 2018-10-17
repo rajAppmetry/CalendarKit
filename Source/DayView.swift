@@ -8,6 +8,8 @@ public protocol DayViewDelegate: AnyObject {
   func dayViewDidLongPressTimelineAtHour(_ hour: Int)
   func dayView(dayView: DayView, willMoveTo date: Date)
   func dayView(dayView: DayView, didMoveTo  date: Date)
+func dayView(didScrolled : UIScrollView)
+func getEmptyView(forDate : Date) -> UIView?
 }
 
 public class DayView: UIView {
@@ -132,34 +134,46 @@ public class DayView: UIView {
 }
 
 extension DayView: EventViewDelegate {
-  public func eventViewDidTap(_ eventView: EventView) {
-    delegate?.dayViewDidSelectEventView(eventView)
-  }
-  public func eventViewDidLongPress(_ eventview: EventView) {
-    delegate?.dayViewDidLongPressEventView(eventview)
-  }
+    public func eventViewDidTap(_ eventView: EventView) {
+        delegate?.dayViewDidSelectEventView(eventView)
+    }
+    public func eventViewDidLongPress(_ eventview: EventView) {
+        delegate?.dayViewDidLongPressEventView(eventview)
+    }
 }
 
 extension DayView: TimelinePagerViewDelegate {
-  public func timelinePagerDidSelectEventView(_ eventView: EventView) {
-    delegate?.dayViewDidSelectEventView(eventView)
-  }
-  public func timelinePagerDidLongPressEventView(_ eventView: EventView) {
-    delegate?.dayViewDidLongPressEventView(eventView)
-  }
-  public func timelinePagerDidLongPressTimelineAtHour(_ hour: Int) {
-    delegate?.dayViewDidLongPressTimelineAtHour(hour)
-  }
-  public func timelinePager(timelinePager: TimelinePagerView, willMoveTo date: Date) {
-    delegate?.dayView(dayView: self, willMoveTo: date)
-  }
-  public func timelinePager(timelinePager: TimelinePagerView, didMoveTo  date: Date) {
-    delegate?.dayView(dayView: self, didMoveTo: date)
-  }
+    public func timelinePager(didScroll: UIScrollView) {
+        delegate?.dayView(didScrolled : didScroll)
+    }
+    
+    public func timelinePagerDidSelectEventView(_ eventView: EventView) {
+        delegate?.dayViewDidSelectEventView(eventView)
+    }
+    public func timelinePagerDidLongPressEventView(_ eventView: EventView) {
+        delegate?.dayViewDidLongPressEventView(eventView)
+    }
+    public func timelinePagerDidLongPressTimelineAtHour(_ hour: Int) {
+        delegate?.dayViewDidLongPressTimelineAtHour(hour)
+    }
+    public func timelinePager(timelinePager: TimelinePagerView, willMoveTo date: Date) {
+        delegate?.dayView(dayView: self, willMoveTo: date)
+    }
+    public func timelinePager(timelinePager: TimelinePagerView, didMoveTo  date: Date) {
+        delegate?.dayView(dayView: self, didMoveTo: date)
+    }
+    public func getEmptyView(forDate : Date) -> UIView? {
+        return delegate?.getEmptyView(forDate : forDate)
+    }
 }
 
 extension DayView: TimelineViewDelegate {
-  public func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int) {
-    delegate?.dayViewDidLongPressTimelineAtHour(hour)
-  }
+    public func getEmptyView() -> UIView? {
+        let date = self.timelinePagerView.timelinePager.reusableViews[Int(self.timelinePagerView.timelinePager.currentScrollViewPage)].timeline.date
+        return delegate?.getEmptyView(forDate : date)
+    }
+    
+    public func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int) {
+        delegate?.dayViewDidLongPressTimelineAtHour(hour)
+    }
 }
