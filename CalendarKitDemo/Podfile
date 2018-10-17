@@ -1,5 +1,5 @@
 use_frameworks!
 
 target "CalendarKitDemo" do
-	pod 'CalendarKit', path: '../'
+	pod 'CalendarKit', :git => 'https://github.com/rsekharAppyog/CalendarKit' , :branch => 'DayViewChange'
 end
