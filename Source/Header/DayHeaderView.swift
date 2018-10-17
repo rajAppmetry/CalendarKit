@@ -133,6 +133,10 @@ extension DayHeaderView: DayViewStateUpdating {
 }
 
 extension DayHeaderView: PagingScrollViewDelegate {
+    func scrollViewDidScrolled(scrollView: UIScrollView) {
+        //nothing
+    }
+    
   func scrollviewDidScrollToViewAtIndex(_ index: Int) {
     let activeView = pagingScrollView.reusableViews[index]
     activeView.selectedIndex = currentWeekdayIndex
