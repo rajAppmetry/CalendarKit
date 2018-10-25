@@ -228,6 +228,7 @@ public class TimelineView: UIView, ReusableView {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
+        
         recalculateEventLayout()
         layoutEvents()
         layoutNowLine()
@@ -319,8 +320,11 @@ public class TimelineView: UIView, ReusableView {
                 }
             }
             groupsOfEvents.append(overlappingEvents)
-            overlappingEvents.removeAll()
+            overlappingEvents = [event]
         }
+        
+        groupsOfEvents.append(overlappingEvents)
+        overlappingEvents.removeAll()
         
         for overlappingEvents in groupsOfEvents {
             let totalCount = CGFloat(overlappingEvents.count)
