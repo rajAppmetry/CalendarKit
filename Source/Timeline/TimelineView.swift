@@ -140,6 +140,7 @@ public class TimelineView: UIView, ReusableView {
         contentMode = .redraw
         backgroundColor = .white
         addSubview(nowLine)
+        nowLine.isUserInteractionEnabled = false
         
         // Add long press gesture recognizer
         addGestureRecognizer(longPressGestureRecognizer)
@@ -334,7 +335,11 @@ public class TimelineView: UIView, ReusableView {
                 let floatIndex = CGFloat(index)
                 let x = style.leftInset + floatIndex / totalCount * calendarWidth
                 let equalWidth = calendarWidth / totalCount
-                event.frame = CGRect(x: x, y: startY, width: equalWidth, height: endY - startY)
+                var eventHeight = endY - startY
+                if eventHeight < event.descriptor.eventMinimunHeight {
+                    eventHeight = event.descriptor.eventMinimunHeight
+                }
+                event.frame = CGRect(x: x, y: startY, width: equalWidth, height: eventHeight)
             }
         }
     }
