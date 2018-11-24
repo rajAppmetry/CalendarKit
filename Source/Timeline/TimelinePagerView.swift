@@ -59,7 +59,7 @@ public class TimelinePagerView: UIView {
             let timeline = timelineContainer.timeline
             timeline.updateStyle(style)
             timeline.frame.size.height = timeline.fullHeight
-            timelineContainer.contentSize = timeline.frame.size
+            //timelineContainer.contentSize = timeline.frame.size
             timelineContainer.backgroundColor = style.backgroundColor
         }
     }
