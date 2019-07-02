@@ -1,12 +1,12 @@
 PODS:
-  - CalendarKit (0.6.1):
+  - CalendarKit (0.7.2):
     - DateToolsSwift
     - Neon
   - DateToolsSwift (4.0.0)
   - Neon (0.4.0)
 
 DEPENDENCIES:
-  - CalendarKit (from `https://github.com/rsekharAppyog/CalendarKit`, branch `DayViewChange`)
+  - CalendarKit (from `https://github.com/rsekharAppyog/CalendarKit`, branch `DayViewChange_5`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -15,19 +15,19 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CalendarKit:
-    :branch: DayViewChange
+    :branch: DayViewChange_5
     :git: https://github.com/rsekharAppyog/CalendarKit
 
 CHECKOUT OPTIONS:
   CalendarKit:
-    :commit: beb6b136b37fbb2f84a23c71f18481d06194117d
+    :commit: e59bad429feeedc15f8fe591c88268c7a43a453b
     :git: https://github.com/rsekharAppyog/CalendarKit
 
 SPEC CHECKSUMS:
-  CalendarKit: 13901eb4e0df7d04dec2112fefea74953543cb6a
+  CalendarKit: 6ea8d2f1e71e775538105a2472adef35a74690c8
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
 
-PODFILE CHECKSUM: 6eb8938a16560fd9c5039e5153a278c540f08d5f
+PODFILE CHECKSUM: 275314a389f007e399b6497454d1514e6e1ea375
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.5.3

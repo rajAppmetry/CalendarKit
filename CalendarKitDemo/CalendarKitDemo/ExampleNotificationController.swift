@@ -6,7 +6,7 @@ class ExampleNotificationController: UIViewController {
   lazy var timelineContainer: TimelineContainer = {
     let timeline = TimelineView()
     timeline.frame.size.height = timeline.fullHeight
-    let container = TimelineContainer(timeline)
+    let container = TimelineContainer(timeline,emptyContainerView : UIView())
     container.contentSize = timeline.frame.size
     container.addSubview(timeline)
     container.isUserInteractionEnabled = false
