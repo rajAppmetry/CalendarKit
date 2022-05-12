@@ -100,9 +100,11 @@ public class TimelinePagerView: UIView {
     
     func configureTimelineController(date: Date) -> TimelineContainerController {
         let controller = TimelineContainerController()
-        updateStyleOfTimelineContainer(controller: controller)
         let timeline = controller.timeline
         timeline.delegate = self
+        controller.container.delegate = self
+        controller.container.reloadEmptyView()
+        updateStyleOfTimelineContainer(controller: controller)
         timeline.eventViewDelegate = self
         timeline.calendar = calendar
         timeline.date = date.dateOnly(calendar: calendar)
@@ -114,8 +116,10 @@ public class TimelinePagerView: UIView {
         pagingViewController.children.forEach({ (controller) in
             if let controller = controller as? TimelineContainerController {
                 self.updateTimeline(controller.timeline)
+                controller.container.reloadEmptyView()
             }
         })
+        
     }
     
     override public func layoutSubviews() {

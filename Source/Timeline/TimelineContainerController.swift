@@ -6,8 +6,7 @@ public class TimelineContainerController: UIViewController {
     private var emptyView : UIView = UIView()
     lazy var timeline = TimelineView()
     lazy var container: TimelineContainer = {
-        emptyView.frame = timeline.frame
-        let view = TimelineContainer(timeline,emptyContainerView : emptyView)
+       let view = TimelineContainer(timeline,emptyContainerView : emptyView)
         view.addSubview(timeline)
         view.addSubview(emptyView)
         return view
@@ -20,7 +19,7 @@ public class TimelineContainerController: UIViewController {
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         container.contentSize = timeline.frame.size
-        emptyView.frame = timeline.frame
+        
         if let newOffset = pendingContentOffset {
             // Apply new offset only once the size has been determined
             if view.bounds != .zero {

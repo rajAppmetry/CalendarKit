@@ -33,7 +33,7 @@ public class TimelineContainer: UIScrollView, ReusableView {
     override public func layoutSubviews() {
         timeline.frame = CGRect(x: 0, y: 0, width: width, height: timeline.fullHeight)
         timeline.offsetAllDayView(by: contentOffset.y)
-        emptyContainerView.frame = self.bounds
+        emptyContainerView.frame = self.frame
         
         showEmptyViewIfNeeded()
         
@@ -57,10 +57,14 @@ public class TimelineContainer: UIScrollView, ReusableView {
             view.frame = emptyContainerView.bounds
             emptyContainerView.addSubview(view)
             view.translatesAutoresizingMaskIntoConstraints = false
-            view.leadingAnchor.constraint(equalTo: emptyContainerView.leadingAnchor).isActive = true
-            view.trailingAnchor.constraint(equalTo: emptyContainerView.trailingAnchor).isActive = true
-            view.topAnchor.constraint(equalTo: emptyContainerView.topAnchor).isActive = true
-            view.bottomAnchor.constraint(equalTo: emptyContainerView.bottomAnchor).isActive = true
+            
+            NSLayoutConstraint.activate([
+                view.leadingAnchor.constraint(equalTo: emptyContainerView.leadingAnchor),
+                view.trailingAnchor.constraint(equalTo: emptyContainerView.trailingAnchor),
+                view.topAnchor.constraint(equalTo: emptyContainerView.topAnchor),
+                view.bottomAnchor.constraint(equalTo: emptyContainerView.bottomAnchor)
+            ])
+            
         } else {
             print("invalid timeline delegate")
         }
