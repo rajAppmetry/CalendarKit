@@ -4,7 +4,7 @@ import DateToolsSwift
 
 public protocol TimelineViewDelegate: AnyObject {
     func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int)
-    func getEmptyView() -> UIView?
+    func getEmptyView(for date: Date) -> UIView?
 }
 
 public class TimelineView: UIView {

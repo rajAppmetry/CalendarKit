@@ -51,7 +51,7 @@ public class TimelineContainer: UIScrollView, ReusableView {
     
     public func reloadEmptyView() {
         //emptyContainerView.subviews.forEach { $0.removeFromSuperview() }
-        if let view = timeline.delegate?.getEmptyView() {
+        if let view = timeline.delegate?.getEmptyView(for: timeline.date) {
             emptyContainerView.subviews.forEach { $0.removeFromSuperview() }
             print("creating empty view")
             view.frame = emptyContainerView.bounds

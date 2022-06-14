@@ -168,9 +168,7 @@ extension DayView: TimelinePagerViewDelegate {
 }
 
 extension DayView: TimelineViewDelegate {
-    public func getEmptyView() -> UIView? {
-        //TODO
-        let date = Date()//self.timelinePagerView.
+    public func getEmptyView(for date: Date) -> UIView? {
         return delegate?.getEmptyView(forDate : date)
     }
     
