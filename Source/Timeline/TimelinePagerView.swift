@@ -103,12 +103,12 @@ public class TimelinePagerView: UIView {
         let timeline = controller.timeline
         timeline.delegate = self
         controller.container.delegate = self
-        controller.container.reloadEmptyView()
         updateStyleOfTimelineContainer(controller: controller)
         timeline.eventViewDelegate = self
         timeline.calendar = calendar
         timeline.date = date.dateOnly(calendar: calendar)
         updateTimeline(timeline)
+        controller.container.reloadEmptyView()
         return controller
     }
     
@@ -211,9 +211,9 @@ extension TimelinePagerView: TimelineViewDelegate {
     public func timelineView(_ timelineView: TimelineView, didLongPressAt hour: Int) {
         delegate?.timelinePagerDidLongPressTimelineAtHour(hour)
     }
-    public func getEmptyView() -> UIView? {
+    public func getEmptyView(for date: Date) -> UIView? {
         // let date = timelinePager.reusableViews[Int(timelinePager.currentScrollViewPage)].timeline.date
-        return delegate?.getEmptyView(forDate : Date())
+        return delegate?.getEmptyView(forDate : date)
     }
 }
 
