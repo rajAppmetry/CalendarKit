@@ -16,6 +16,8 @@ public class TimelineContainer: UIScrollView, ReusableView {
     }
     
     private func showEmptyViewIfNeeded() {
+        emptyContainerView.frame = CGRect(origin: .zero, size: self.frame.size)
+        
         if self.timeline.layoutAttributes.isEmpty {
             print("showing empty view")
             self.timeline.isHidden = true
@@ -33,7 +35,7 @@ public class TimelineContainer: UIScrollView, ReusableView {
     override public func layoutSubviews() {
         timeline.frame = CGRect(x: 0, y: 0, width: width, height: timeline.fullHeight)
         timeline.offsetAllDayView(by: contentOffset.y)
-        emptyContainerView.frame = self.frame
+        emptyContainerView.frame = CGRect(origin: .zero, size: self.frame.size)
         
         showEmptyViewIfNeeded()
         
