@@ -69,6 +69,8 @@ import Neon
     timeLabel.centerYAnchor.constraint(equalTo: line.centerYAnchor).isActive = true
     timeLabel.baselineAdjustment = .alignCenters
     
+      self.isUserInteractionEnabled = false
+      
     updateStyle(style)
     timer = Timer(timeInterval: 1,
                   target: self,
