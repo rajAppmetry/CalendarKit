@@ -1,17 +1,22 @@
-GitHub Issues is for reporting bugs, discussing features and general feedback in **CalendarKit**. Be sure to check our [documentation](http://cocoadocs.org/docsets/CalendarKit) and [past issues](https://github.com/richardtop/CalendarKit/issues?state=closed) before opening any new issues.
+CalendarKit actively accepts contributions in a form of pull requests (code changes) and issues (bug reports and feature requests). If you wish to submit a pull request, feel free to raise an issue first to discuss the implementation details and your approach.
 
-Alternatively, you may ask questions related to this library on [StackOverflow](https://stackoverflow.com/questions/tagged/calendarkit), tag `CalendarKit`.
+## Need Help?
+If you have a **programming question** about how to use CalendarKit in your application, [Create a new GitHub Issue with the question tag](https://github.com/richardtop/CalendarKit/issues/new?assignees=&labels=question&projects=&template=question.md&title=).
+
+Check out the [Sample App](https://github.com/richardtop/CalendarApp) for reference.
+
+[Create a new Issue from template](https://github.com/richardtop/CalendarKit/issues/new/choose) to report a bug or request a new feature.
 
 
-If you are posting about a crash in your application, a stack trace is helpful, but additional context, in the form of code and explanation, is necessary to be of any use.
 
 ## Code Style
-This project has the following code style:
+When submitting a pull request, adhering to the code style is recommended, although not compulsory.
+
+This project has the following code style (Xcode Default):
 
 * Indent with spaces (not tabs)
-* Tab width: 2 spaces
-* Indent with: 2 spaces
-* No file headers
+* Tab width: 4 spaces
+* Indent with: 4 spaces
 * Curly braces open on the same line as the code
 
 ### Examples
